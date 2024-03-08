@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <title>Rock-Paper-Scissors</title>
+    <style>
+        body{
+            height: 100%;
+            margin: 0;
+            padding:0;
+            background-image: url('./rps-bgImg.jpg');
+            background-size: cover; /* Adjust as needed */
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .card{
+            text-align: center;
+            background-color: hsla(0, 2%, 90%, 0.15);
+            backdrop-filter: blur(7px);
+            max-width: 800px;
+            height: 600px;
+            max-height:600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 5px 5px 10px hsl(224, 93%, 60%);
+        }
+        
+        h1{
+            font-size: 3rem;
+            color: hsl(203, 100%, 45%);
+        }
+        
+        #rock{
+            background-image: url('./rock-img.png');
+            background-size: cover; /* Adjust as needed */
+            background-repeat: no-repeat;
+            background-position: center;
+            /* Additional styling */
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            height:150px;
+            width: 150px;
+            margin-left: 10px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border-radius: 70px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        #paper{
+            background-image: url('./paper-img.png');
+            background-size: cover; /* Adjust as needed */
+            background-repeat: no-repeat;
+            background-position: center;
+            /* Additional styling */
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            height:150px;
+            width: 150px;
+            margin-left: 10px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border-radius: 70px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        #sxr{
+            background-image: url('./sxr-img.png');
+            background-size: cover; /* Adjust as needed */
+            background-repeat: no-repeat;
+            background-position: center;
+            /* Additional styling */
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            height:150px;
+            width: 150px;
+            margin-left: 10px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border-radius: 70px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        #playerDisplay, #computerDisplay{
+            font-size: 2rem;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        #resultDisplay{
+            font-size: 3.5rem;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .scoreDisplay{
+            font-size: 2.5rem;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        
+        .greenText, #playerScore{
+            color: hsl(108, 88%, 53%);
+        }
+        
+        .redText, #computerScore{
+            color: hsl(10, 100%, 50%);
+        }
+        
+        #resetBtn{
+            font-size: 2em;
+            font-weight: bold;
+            font-family: Helvetica, Arial, sans-serif;
+            text-align: center;
+            background-color: hsl(180, 75%, 49%);
+            color: white;
+            padding: 5px 10px;
+            margin-top: 10px;
+            border:none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="btns">
+                <h1>Rock-Paper-Scissors</h1>
+                <button id="rock" onclick="playGame('Rock')"></button>
+                <button id="paper" onclick="playGame('Paper')"></button>
+                <button id="sxr" onclick="playGame('Scissor')"></button>
+            </div>
+            <div id="playerDisplay">Let's start</div>
+            <div id="computerDisplay"></div>
+            <div id="resultDisplay"></div>
+            <br>
+            <div class="scoreDisplay">Player Score:
+                <span id="playerScore">0</span>
+            </div>
+            <div class="scoreDisplay">Computer Score:
+                <span id="computerScore">0</span>
+            </div>
+            <br>
+            <button id="resetBtn" onclick="reset()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        const choices = ['Rock','Paper','Scissor'];
+        const playerDisplay = document.getElementById("playerDisplay");
+        const computerDisplay = document.getElementById("computerDisplay");
+        const resultDisplay = document.getElementById("resultDisplay")
+        const playerScore = document.getElementById("playerScore");
+        const computerScore = document.getElementById("computerScore");
+        let pS = 0;
+        let cS = 0;
+        let result = "";
+
+        function playGame(playerChoice){
+            let computerChoice = choices[Math.floor(Math.random()*3)];
+
+            if(playerChoice === computerChoice){
+                result = "It's a Tie."
+            }
+            else{
+                switch (playerChoice){
+                    case "Rock":
+                        result = (computerChoice === "Paper") ? "Computer Win." : "You Win!";
+                        break;
+                    case "Paper":
+                        result = (computerChoice === "Scissor") ? "Computer Win." : "You Win!";
+                        break;
+                    case "Scissor":
+                        result = (computerChoice === "Rock") ? "Computer Win." : "You Win!";
+                        break;
+                }
+            }
+
+            playerDisplay.textContent = `Player: ${playerChoice}`;
+            computerDisplay.textContent = `Computer: ${computerChoice}`;
+            resultDisplay.textContent = result;
+
+            resultDisplay.classList.remove("greenText", "redText");
+            switch(result){
+                case "Computer Win.":
+                    resultDisplay.classList.add("redText");
+                    cS++;
+                    computerScore.textContent = cS;
+                    break;
+                    case "You Win!":
+                        resultDisplay.classList.add("greenText");
+                        pS++;
+                        playerScore.textContent = pS;
+                    break;
+            }
+        }
+
+        function reset(){
+            pS=0;
+            cS=0;
+            result = "";
+            playerDisplay.textContent = `Let's Start...`;
+            computerDisplay.textContent = ``;
+            resultDisplay.textContent = result;
+            computerScore.textContent = cS;
+            playerScore.textContent = pS;
+        }
+    </script>
+</body>
+</html>
